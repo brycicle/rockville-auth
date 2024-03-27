@@ -9,8 +9,10 @@ spring:
       max-lifetime: 30000
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     database: mysql
 server:
   port: 8000
+  servlet:
+    context-path: /auth
