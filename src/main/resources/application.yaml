@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: rockville-auth
+  datasource:
+    url: jdbc:mysql://localhost/rockville-auth
+    username: root
+    password: Bryce@27923
+    hikari:
+      max-lifetime: 30000
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database: mysql
+server:
+  port: 8000
