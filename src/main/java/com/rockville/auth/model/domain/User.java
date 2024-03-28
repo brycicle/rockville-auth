@@ -9,7 +9,7 @@ import lombok.*;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "role")
+@Table(name = "user")
 public class User extends AuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
