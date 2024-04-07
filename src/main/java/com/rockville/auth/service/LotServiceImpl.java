@@ -32,7 +32,6 @@ public class LotServiceImpl implements LotService {
                         .status(lot.getStatus())
                         .size(lot.getSize())
                         .coordinates(lotCoordinateService.getCoordinateByLotId(lot.getId()))
-//                        TODO 5 Add coordinates (get from lotCoordinateService)
                         .createdBy(lot.getCreatedBy())
                         .createdAt(lot.getCreatedAt())
                         .updatedBy(lot.getUpdatedBy())
