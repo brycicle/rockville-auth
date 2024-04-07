@@ -3,20 +3,15 @@ package com.rockville.auth.model.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
 
 @Builder
 @Data
-public class LotResponse {
+public class LotCoordinateResponse {
     private String id;
-    private String blockName;
-    private String lotName;
-    private String status;
-    private BigDecimal size;
-
-    private List<LotCoordinateResponse> coordinates;
+    private String lotId;
+    private int coorX;
+    private int coorY;
 
     private Instant createdAt;
     private String createdBy;

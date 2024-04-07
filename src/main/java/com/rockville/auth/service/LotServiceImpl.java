@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class LotServiceImpl implements LotService {
 
     private final LotRepository repository;
+    private final LotCoordinateService lotCoordinateService;
 
 
     @Override
@@ -48,6 +49,7 @@ public class LotServiceImpl implements LotService {
                         .status(request.getStatus())
                         .size(request.getSize())
                         .build());
+
         return LotResponse.builder()
                 .size(lot.getSize())
                 .status(lot.getStatus())
