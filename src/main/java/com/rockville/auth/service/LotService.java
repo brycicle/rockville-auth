@@ -8,7 +8,7 @@ import com.rockville.auth.model.dto.UserResponse;
 import java.util.List;
 
 public interface LotService {
-    List<LotResponse> getLot();
+    List<LotResponse> getLots();
 //    TODO DELETE CREATE LOT
     LotResponse createLot(LotRequest request);
 }

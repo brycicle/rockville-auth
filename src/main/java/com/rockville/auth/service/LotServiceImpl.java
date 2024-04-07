@@ -23,7 +23,7 @@ public class LotServiceImpl implements LotService {
 
 
     @Override
-    public List<LotResponse> getLot() {
+    public List<LotResponse> getLots() {
         return repository.findByLotNameEquals().stream()
                 .map(lot -> LotResponse.builder()
                         .id(lot.getId())
@@ -31,6 +31,8 @@ public class LotServiceImpl implements LotService {
                         .lotName(lot.getLotName())
                         .status(lot.getStatus())
                         .size(lot.getSize())
+                        .coordinates(lotCoordinateService.getCoordinateByLotId(lot.getId()))
+//                        TODO 5 Add coordinates (get from lotCoordinateService)
                         .createdBy(lot.getCreatedBy())
                         .createdAt(lot.getCreatedAt())
                         .updatedBy(lot.getUpdatedBy())
@@ -48,13 +50,23 @@ public class LotServiceImpl implements LotService {
                         .lotName(request.getLotName())
                         .status(request.getStatus())
                         .size(request.getSize())
-                        .build());
+                        .build()
+        );
+
+        request.getCoordinateRequests().forEach(
+                lotCoordinateRequest -> {
+                    lotCoordinateRequest.setLotId(lot.getId());
+                }
+        );
+
+        List<LotCoordinateResponse> lotCooridnates = lotCoordinateService.createCoordinate(request.getCoordinateRequests());
 
         return LotResponse.builder()
                 .size(lot.getSize())
                 .status(lot.getStatus())
                 .blockName(lot.getBlockName())
                 .lotName(lot.getLotName())
+                .coordinates(lotCooridnates)
                 .build();
     }
 }

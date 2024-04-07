@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Builder
 @Data
@@ -13,5 +14,6 @@ public class LotRequest {
     private String lotName;
     private String status;
     private BigDecimal size;
+    private List<LotCoordinateRequest> coordinateRequests;
 
 }
