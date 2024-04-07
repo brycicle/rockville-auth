@@ -12,6 +12,10 @@ spring:
       ddl-auto: update
     show-sql: true
     database: mysql
+  security:
+    user:
+      name: rockville
+      password: rockville
 server:
   port: 8000
   servlet:
