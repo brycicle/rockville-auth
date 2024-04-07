@@ -21,6 +21,9 @@ public class LotCoordinateServiceImpl implements LotCoordinateService {
 
     @Override
     public List<LotCoordinateResponse> getCoordinateByLotId(String lotId) {
+
+
+
         return repository.findAllByLotIdEquals(lotId).stream().map(
                 lotCoordinate -> LotCoordinateResponse.builder()
                         .lotId(lotCoordinate.getLotId())
@@ -32,13 +35,10 @@ public class LotCoordinateServiceImpl implements LotCoordinateService {
 
     @Override
     public List<LotCoordinateResponse> createCoordinate(List<LotCoordinateRequest> requests) {
-//        Create Emply LotCoordinateResponse List
         List<LotCoordinateResponse> lotCoordinates = new ArrayList<>();
 
-//        Loop all reqests
         requests.forEach(
                 lotCoordinateRequest -> {
-//                    For all request inside requests, save lotCoordinate
                     LotCoordinate lotCoordinate = repository.save(
                             LotCoordinate.builder()
                                     .lotId(lotCoordinateRequest.getLotId())
@@ -46,7 +46,6 @@ public class LotCoordinateServiceImpl implements LotCoordinateService {
                                     .coorY(lotCoordinateRequest.getCoorY())
                                     .build()
                     );
-//                    For All saved lot coordinate, add to empty list
                     lotCoordinates.add(
                             LotCoordinateResponse.builder()
                                     .lotId(lotCoordinate.getLotId())
