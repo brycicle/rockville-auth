@@ -12,7 +12,6 @@ import java.util.Optional;
 public interface HouseRepository extends CrudRepository<House, String> {
 
     Optional<House> findByIdEquals(String id);
-    Optional<House> findByTypeEquals(String type);
     Optional<House> findByFloorsEquals(String floors);
     Optional<House> findAllBySizeGreaterThanEqualAndSizeLessThanEqual(BigDecimal min, BigDecimal max);
 

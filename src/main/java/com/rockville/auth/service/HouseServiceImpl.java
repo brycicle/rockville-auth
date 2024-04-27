@@ -7,28 +7,23 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class HouseServiceImpl implements HouseService {
-
     private final HouseRepository repository;
-
     @Override
     public HouseResponse createHouse(HouseRequest request) {
         House house = repository.save(
                 House.builder()
-                        .type(request.getType())
+                        .name(request.getName())
                         .size(request.getSize())
                         .floors(request.getFloor())
                         .build()
         );
         return HouseResponse.builder()
                 .id(house.getId())
-                .type(house.getType())
+                .name(house.getName())
                 .size(house.getSize())
                 .floors(house.getFloors())
                 .build();

@@ -18,10 +18,10 @@ public class Lot extends AuditingEntity {
     @Column(name = "id", unique = true)
     private String id;
 
-    @Column(name = "blockName", unique = true)
+    @Column(name = "blockName")
     private String blockName;
 
-    @Column(name = "lotName", unique = true)
+    @Column(name = "lotName")
     private String lotName;
 
     @Column(name = "status")

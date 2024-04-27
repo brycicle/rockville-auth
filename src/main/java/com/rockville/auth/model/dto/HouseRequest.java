@@ -4,13 +4,12 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Builder
 @Data
 public class HouseRequest {
 
-    private String type;
+    private String name;
     private String floor;
     private BigDecimal size;
 

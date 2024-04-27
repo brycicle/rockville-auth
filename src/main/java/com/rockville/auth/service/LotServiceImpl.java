@@ -1,17 +1,16 @@
 package com.rockville.auth.service;
 
 import com.rockville.auth.model.domain.Lot;
-import com.rockville.auth.model.domain.Role;
-import com.rockville.auth.model.domain.User;
-import com.rockville.auth.model.dto.*;
+import com.rockville.auth.model.dto.LotCoordinateResponse;
+import com.rockville.auth.model.dto.LotRequest;
+import com.rockville.auth.model.dto.LotResponse;
 import com.rockville.auth.repository.LotRepository;
-import com.rockville.auth.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -21,24 +20,9 @@ public class LotServiceImpl implements LotService {
     private final LotRepository repository;
     private final LotCoordinateService lotCoordinateService;
 
-
     @Override
     public List<LotResponse> getLots() {
-        return repository.findByLotNameEquals().stream()
-                .map(lot -> LotResponse.builder()
-                        .id(lot.getId())
-                        .blockName(lot.getBlockName())
-                        .lotName(lot.getLotName())
-                        .status(lot.getStatus())
-                        .size(lot.getSize())
-                        .coordinates(lotCoordinateService.getCoordinateByLotId(lot.getId()))
-                        .createdBy(lot.getCreatedBy())
-                        .createdAt(lot.getCreatedAt())
-                        .updatedBy(lot.getUpdatedBy())
-                        .updatedAt(lot.getUpdatedAt())
-                        .build()
-                )
-                .collect(Collectors.toList());
+        return repository.getLots();
     }
 
     @Override
@@ -52,13 +36,14 @@ public class LotServiceImpl implements LotService {
                         .build()
         );
 
-        request.getCoordinateRequests().forEach(
+        List<LotCoordinateResponse> lotCooridnates = new ArrayList<>();
+
+        request.getCoordinates().forEach(
                 lotCoordinateRequest -> {
                     lotCoordinateRequest.setLotId(lot.getId());
+                    lotCooridnates.add(lotCoordinateService.createCoordinate(lotCoordinateRequest));
                 }
         );
-
-        List<LotCoordinateResponse> lotCooridnates = lotCoordinateService.createCoordinate(request.getCoordinateRequests());
 
         return LotResponse.builder()
                 .size(lot.getSize())
@@ -67,5 +52,12 @@ public class LotServiceImpl implements LotService {
                 .lotName(lot.getLotName())
                 .coordinates(lotCooridnates)
                 .build();
+    }
+
+    @Override
+    public List<LotResponse> createLots(List<LotRequest> requests) {
+        List<LotResponse> response = new ArrayList<>();
+        requests.forEach(lotRequest -> response.add(createLot(lotRequest)));
+        return response;
     }
 }

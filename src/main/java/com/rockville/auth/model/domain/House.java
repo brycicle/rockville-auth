@@ -18,8 +18,8 @@ public class House extends AuditingEntity {
     @Column(name = "id", unique = true)
     private String id;
 
-    @Column(name = "type", unique = true)
-    private String type;
+    @Column(name = "name", unique = true)
+    private String name;
 
     @Column(name = "size")
     private BigDecimal size;

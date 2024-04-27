@@ -5,13 +5,12 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
 
 @Builder
 @Data
 public class HouseResponse {
     private String id;
-    private String type;
+    private String name;
     private BigDecimal size;
     private String floors;
 
