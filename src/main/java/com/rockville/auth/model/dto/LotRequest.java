@@ -14,6 +14,6 @@ public class LotRequest {
     private String lotName;
     private String status;
     private BigDecimal size;
-    private List<LotCoordinateRequest> coordinateRequests;
+    private List<LotCoordinateRequest> coordinates;
 
 }

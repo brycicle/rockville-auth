@@ -11,4 +11,5 @@ public interface LotService {
     List<LotResponse> getLots();
 //    TODO DELETE CREATE LOT
     LotResponse createLot(LotRequest request);
+    List<LotResponse> createLots(List<LotRequest> requests);
 }

@@ -9,4 +9,6 @@ public interface LotCoordinateService {
     List<LotCoordinateResponse> getCoordinateByLotId(String lotId);
 
     List<LotCoordinateResponse> createCoordinate(List<LotCoordinateRequest> requests);
+
+    LotCoordinateResponse createCoordinate(LotCoordinateRequest request);
 }
