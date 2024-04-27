@@ -18,7 +18,4 @@ public interface LotRepository extends CrudRepository<Lot, String>, QdslLotRepos
     List<Lot> findAllByStatusEquals(String status);
     List<Lot> findAllByIdIsNotNull();
     Optional<Lot> findAllBySizeGreaterThanEqualAndSizeLessThanEqual(BigDecimal min, BigDecimal max);
-
-
-
 }

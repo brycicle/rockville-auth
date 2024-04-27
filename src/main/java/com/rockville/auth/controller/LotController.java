@@ -16,6 +16,7 @@ import java.util.List;
 public class LotController {
 
     private final LotService lotService;
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public BaseResponse<List<LotResponse>> getLots() {
         log.info("LotController - getLots");
