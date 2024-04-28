@@ -1,6 +1,7 @@
 package com.rockville.auth.controller;
 
 import com.rockville.auth.model.dto.*;
+import com.rockville.auth.service.CustomerService;
 import com.rockville.auth.service.LotService;
 import com.rockville.auth.service.ReservationService;
 import lombok.RequiredArgsConstructor;

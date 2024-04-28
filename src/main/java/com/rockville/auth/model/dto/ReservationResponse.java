@@ -10,9 +10,9 @@ import java.util.List;
 @Data
 public class ReservationResponse {
     private String id;
-    String lotId;
-    String customerId;
-    String contractPrice;
+    private String lotId;
+    private String customerId;
+    private String contractPrice;
 
     private List<LotCoordinateResponse> coordinates;
 

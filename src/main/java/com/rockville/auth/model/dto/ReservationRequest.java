@@ -7,8 +7,10 @@ import lombok.Data;
 @Data
 public class ReservationRequest {
 
-    String lotId;
-    String customerId;
-    String contractPrice;
+    private String lotId;
+    private String customerId;
+    private String contractPrice;
+
+    private CustomerRequest customerRequest;
 
 }
