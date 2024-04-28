@@ -4,20 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
 
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class HouseResponse {
-    private String id;
-    private String name;
-    private BigDecimal lotArea;
-    private BigDecimal floorArea;
-    private BigDecimal price;
-    private List<HouseDetailResponse> details;
+public class HouseDetailResponse {
+    private String houseId;
+    private String detail;
 
     private Instant createdAt;
     private String createdBy;

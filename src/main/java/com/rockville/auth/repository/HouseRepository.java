@@ -1,6 +1,7 @@
 package com.rockville.auth.repository;
 
 import com.rockville.auth.model.domain.House;
+import com.rockville.auth.repository.qdsl.QdslHouseRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,12 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface HouseRepository extends CrudRepository<House, String> {
+public interface HouseRepository extends CrudRepository<House, String>, QdslHouseRepository {
 
     Optional<House> findByIdEquals(String id);
-    Optional<House> findByFloorsEquals(String floors);
-    Optional<House> findAllBySizeGreaterThanEqualAndSizeLessThanEqual(BigDecimal min, BigDecimal max);
-
-
+    List<House> findAllByLotAreaGreaterThanEqualAndLotAreaLessThanEqual(BigDecimal min, BigDecimal max);
 
 }

@@ -4,10 +4,9 @@ import com.rockville.auth.model.dto.*;
 import com.rockville.auth.service.HouseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -22,5 +21,10 @@ public class HouseController {
         return new BaseResponse<>(
                 houseService.createHouse(request)
         );
+    }
+    @GetMapping
+    public BaseResponse<List<HouseResponse>> getHouses() {
+        log.info("HouseController - getHouses");
+        return new BaseResponse<>(houseService.getHouses());
     }
 }

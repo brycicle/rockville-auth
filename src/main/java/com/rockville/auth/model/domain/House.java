@@ -21,10 +21,16 @@ public class House extends AuditingEntity {
     @Column(name = "name", unique = true)
     private String name;
 
-    @Column(name = "size")
-    private BigDecimal size;
+    @Column(name = "lot_area")
+    private BigDecimal lotArea;
 
-    @Column(name = "floors")
-    private String floors;
+    @Column(name = "floor_area")
+    private BigDecimal floorArea;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+    @Column(name = "multiplier")
+    private BigDecimal multiplier;
 
 }
