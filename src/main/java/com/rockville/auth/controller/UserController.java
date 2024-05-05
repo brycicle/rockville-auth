@@ -31,7 +31,6 @@ public class UserController {
     @PostAuthorize("hasAnyAuthority('Admin')")
     public BaseResponse<List<UserResponse>> getUsers() {
         log.info("UserController - getUsers");
-        log.info("Principal : {}", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return new BaseResponse<>(
                 userService.getUsers()
         );
