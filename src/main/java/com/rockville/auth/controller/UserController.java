@@ -3,8 +3,12 @@ package com.rockville.auth.controller;
 import com.rockville.auth.model.dto.*;
 import com.rockville.auth.service.RoleService;
 import com.rockville.auth.service.UserService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +25,15 @@ public class UserController {
         log.info("UserController - createUser {}", request);
         return new BaseResponse<>(
                 userService.createUser(request)
+        );
+    }
+    @GetMapping
+    @PostAuthorize("hasAnyAuthority('Admin')")
+    public BaseResponse<List<UserResponse>> getUsers() {
+        log.info("UserController - getUsers");
+        log.info("Principal : {}", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return new BaseResponse<>(
+                userService.getUsers()
         );
     }
     @PutMapping("/{userId}")

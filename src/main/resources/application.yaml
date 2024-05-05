@@ -20,6 +20,13 @@ spring:
     user:
       name: rockville
       password: rockville
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 1
+    zipkin:
+      false: true
+
 server:
   port: 8000
   servlet:
@@ -29,5 +36,12 @@ aws:
   accessKey: AKIATCKANC3CL5XHMJHY
   secretKey: TzGLoJHq/Q7bvZ9fDnx/tmRPLb/M/HxWMlu90CoQ
 
+
 jwt:
   secret: d4r4g4lguw3b4ppjwts3cr3tt0kend4r4g4lguw3b4ppjwts3cr3tt0kend4r4g4lguw3b4ppjwts3cr3tt0ken
+management:
+  appoptics:
+    metrics:
+      export:
+        enabled: false
+

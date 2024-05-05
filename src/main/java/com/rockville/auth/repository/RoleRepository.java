@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface RoleRepository extends CrudRepository<Role, String> {
     List<Role> findAllByIdIsNotNull();
+    List<Role> findAllByUserIdEquals(String userId);
 }
