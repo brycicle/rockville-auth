@@ -11,26 +11,17 @@ import java.math.BigDecimal;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "lot")
-public class Lot extends AuditingEntity {
+@Table(name = "house_picture")
+public class HousePicture extends AuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", unique = true)
     private String id;
 
-    @Column(name = "blockName")
-    private String blockName;
+    @Column(name = "house_id")
+    private String houseId;
 
-    @Column(name = "lotName")
-    private String lotName;
-
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "size")
-    private BigDecimal size;
-
-    @Column(name = "type")
-    private String type;
+    @Column(name = "image")
+    private String image;
 
 }

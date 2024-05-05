@@ -41,7 +41,7 @@ public class RoleServiceImpl implements RoleService {
                 Role.builder()
                         .id(request.getId())
                         .userId(request.getUserId())
-                        .name("ADMIN")
+                        .name(request.getName())
                         .build()
         );
 

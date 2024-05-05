@@ -16,15 +16,15 @@ public class CustomerController {
 
     private final CustomerService customerService;
     @GetMapping
-    public BaseResponse<List<CustomerResponse>> getCustomer() {
-        log.info("SampleController - test");
+    public BaseResponse<List<CustomerResponse>> getCustomers() {
+        log.info("CustomerController - getCustomers");
         return new BaseResponse<>(
-                customerService.getCustomer()
+                customerService.getCustomers()
         );
     }
     @PostMapping
-    public BaseResponse<CustomerResponse> getCustomer(@RequestBody CustomerRequest request) {
-        log.info("SampleController - test");
+    public BaseResponse<CustomerResponse> createCustomer(@RequestBody CustomerRequest request) {
+        log.info("CustomerController - createCustomer {}", request);
         return new BaseResponse<>(
                 customerService.createCustomer(request)
         );

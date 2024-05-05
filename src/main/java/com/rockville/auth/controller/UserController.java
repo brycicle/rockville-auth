@@ -23,4 +23,14 @@ public class UserController {
                 userService.createUser(request)
         );
     }
+    @PutMapping("/{userId}")
+    public BaseResponse<UserResponse> updateUser(
+            @PathVariable("userId") String userId,
+            @RequestBody UserRequest request
+    ) {
+        log.info("UserController - updateUser {} - {}", userId, request);
+        return new BaseResponse<>(
+                userService.updateUser(userId, request)
+        );
+    }
 }

@@ -24,14 +24,14 @@ public class RoleController {
     private final RoleService roleService;
     @GetMapping
     public BaseResponse<List<RoleResponse>> getRoles() {
-        log.info("SampleController - test");
+        log.info("RoleController - getRoles");
         return new BaseResponse<>(
                 roleService.getRoles()
         );
     }
     @PostMapping
     public BaseResponse<RoleResponse> getRoles(@RequestBody RoleRequest request) {
-        log.info("SampleController - test");
+        log.info("RoleController - getRoles");
         return new BaseResponse<>(
                 roleService.createRole(request)
         );

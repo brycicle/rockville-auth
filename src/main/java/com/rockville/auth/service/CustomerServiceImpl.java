@@ -17,7 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repository;
 
     @Override
-    public List<CustomerResponse> getCustomer() {
+    public List<CustomerResponse> getCustomers() {
         return repository.findAllByIdIsNotNull()
                 .stream()
                 .map(customer -> CustomerResponse.builder()
@@ -28,6 +28,10 @@ public class CustomerServiceImpl implements CustomerService {
                         .suffix(customer.getSuffix())
                         .emailAddress(customer.getEmailAddress())
                         .address(customer.getAddress())
+                        .createdBy(customer.getCreatedBy())
+                        .createdAt(customer.getCreatedAt())
+                        .updatedBy(customer.getUpdatedBy())
+                        .updatedAt(customer.getUpdatedAt())
                         .build()
                 )
                 .collect(Collectors.toList());
@@ -43,7 +47,9 @@ public class CustomerServiceImpl implements CustomerService {
                         .lastName(request.getLastName())
                         .suffix(request.getSuffix())
                         .emailAddress(request.getEmailAddress())
+                        .contactNumber(request.getContactNumber())
                         .address(request.getAddress())
+                        .type(request.getType())
                         .build()
         );
         return CustomerResponse.builder()
@@ -53,7 +59,13 @@ public class CustomerServiceImpl implements CustomerService {
                 .lastName(customer.getLastName())
                 .suffix(customer.getSuffix())
                 .emailAddress(customer.getEmailAddress())
+                .contactNumber(customer.getContactNumber())
                 .address(customer.getAddress())
+                .type(customer.getType())
+                .createdBy(customer.getCreatedBy())
+                .createdAt(customer.getCreatedAt())
+                .updatedBy(customer.getUpdatedBy())
+                .updatedAt(customer.getUpdatedAt())
                 .build();
     }
 }

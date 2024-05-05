@@ -24,3 +24,10 @@ server:
   port: 8000
   servlet:
     context-path: /auth
+
+aws:
+  accessKey: AKIATCKANC3CL5XHMJHY
+  secretKey: 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
+
+jwt:
+  secret: d4r4g4lguw3b4ppjwts3cr3tt0kend4r4g4lguw3b4ppjwts3cr3tt0kend4r4g4lguw3b4ppjwts3cr3tt0ken

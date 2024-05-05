@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,6 +60,46 @@ public class UserServiceImpl implements UserService {
                         .build()
         );
 //        Return to controller
+        return UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .email(user.getEmail())
+                .contactNumber(user.getContactNumber())
+                .firstName(user.getFirstName())
+                .middleName(user.getMiddleName())
+                .lastName(user.getLastName())
+                .build();
+    }
+
+    @Override
+    public UserResponse updateUser(String userId, UserRequest request) {
+        User user = repository.findByIdEquals(userId)
+                .orElseThrow(RuntimeException::new);
+        if (Optional.ofNullable(request.getUsername()).isPresent()) {
+            user.setUsername(request.getUsername());
+        }
+        if (Optional.ofNullable(request.getPassword()).isPresent()) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+        if (Optional.ofNullable(request.getEmail()).isPresent()) {
+            user.setEmail(request.getEmail());
+        }
+        if (Optional.ofNullable(request.getContactNumber()).isPresent()) {
+            user.setContactNumber(request.getContactNumber());
+        }
+        if (Optional.ofNullable(request.getFirstName()).isPresent()) {
+            user.setFirstName(request.getFirstName());
+        }
+        if (Optional.ofNullable(request.getMiddleName()).isPresent()) {
+            user.setMiddleName(request.getMiddleName());
+        }
+        if (Optional.ofNullable(request.getLastName()).isPresent()) {
+            user.setLastName(request.getLastName());
+        }
+
+        user = repository.save(user);
+
         return UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())

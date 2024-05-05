@@ -17,5 +17,6 @@ public class CustomerRequest {
     String contactNumber;
     String emailAddress;
     String address;
+    String type;
 
 }

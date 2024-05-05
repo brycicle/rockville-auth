@@ -8,6 +8,6 @@ import com.rockville.auth.model.dto.LotResponse;
 import java.util.List;
 
 public interface CustomerService {
-    List<CustomerResponse> getCustomer();
+    List<CustomerResponse> getCustomers();
     CustomerResponse createCustomer(CustomerRequest request);
 }
