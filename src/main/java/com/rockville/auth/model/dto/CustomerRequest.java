@@ -9,14 +9,14 @@ import java.util.List;
 @Builder
 @Data
 public class CustomerRequest {
-
     String firstName;
     String middleName;
     String lastName;
     String suffix;
-    String contactNumber;
-    String emailAddress;
-    String address;
+    String gender;
+    String maritalStatus;
     String type;
-
+    String emailAddress;
+    String contactNumber;
+    String address;
 }

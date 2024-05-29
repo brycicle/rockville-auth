@@ -17,20 +17,16 @@ public class House extends AuditingEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", unique = true)
     private String id;
-
     @Column(name = "name", unique = true)
     private String name;
-
     @Column(name = "lot_area")
     private BigDecimal lotArea;
-
     @Column(name = "floor_area")
     private BigDecimal floorArea;
-
     @Column(name = "price")
     private BigDecimal price;
-
-    @Column(name = "multiplier")
+    @Column(name = "base_price")
+    private BigDecimal basePrice;
+    @Column(name = "multiplier", precision = 38, scale = 4)
     private BigDecimal multiplier;
-
 }

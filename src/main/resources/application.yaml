@@ -2,9 +2,12 @@ spring:
   application:
     name: rockville-auth
   datasource:
-    url: jdbc:mysql://localhost/rockville-auth
+#    url: jdbc:mysql://localhost/rockville-auth
+#    username: root
+#    password: Bryce@27923
+    url: jdbc:mysql://rockville-db.cbmeq2oksu75.ap-southeast-1.rds.amazonaws.com/rockville-auth
     username: root
-    password: Bryce@27923
+    password: Bryce27923
     hikari:
       max-lifetime: 30000
   jpa:
@@ -14,8 +17,8 @@ spring:
     database: mysql
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-    database-platform: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
   security:
     user:
       name: rockville
@@ -26,6 +29,11 @@ spring:
       percentage: 1
     zipkin:
       enabled: false
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+      enabled: true
 
 server:
   port: 8000

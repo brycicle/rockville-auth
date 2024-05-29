@@ -5,6 +5,7 @@ import com.rockville.auth.service.RequirementService;
 import com.rockville.auth.service.ReservationChecklistService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,8 @@ public class ReservationChecklistController {
 
     private final ReservationChecklistService reservationChecklistService;
     @GetMapping
-    public BaseResponse<List<ReservationChecklistResponse>> getReservationChecklist(@RequestParam("type") String type) {
+    @PostAuthorize("hasAnyAuthority('Admin', 'Sales_Agent')")
+    public BaseResponse<List<ReservationChecklistResponse>> getReservationChecklist(@RequestParam(value = "type", required = false) String type) {
         log.info("ReservationChecklistController - getReservationChecklist");
         return new BaseResponse<>(
                 reservationChecklistService.getReservationChecklist(type)

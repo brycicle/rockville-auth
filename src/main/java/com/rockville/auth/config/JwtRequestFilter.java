@@ -1,5 +1,6 @@
 package com.rockville.auth.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rockville.auth.model.dto.UserDetailsDto;
 import com.rockville.auth.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -8,6 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +22,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public final class JwtRequestFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
@@ -28,6 +31,8 @@ public final class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.info(request.getRequestURI());
+        log.info("Request Authorization : {}", request.getHeader("Authorization"));
         final Optional<String> requestTokenHeaderOptional = Optional.ofNullable(request.getHeader("Authorization"));
         Optional<String> usernameOptional = Optional.empty();
         String jwtToken = "";
@@ -38,12 +43,12 @@ public final class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 usernameOptional = Optional.ofNullable(jwtTokenUtil.getUsernameFromToken(jwtToken));
             } catch (final IllegalArgumentException illegalArgumentException) {
-                logger.warn("Unable to get JWT Token");
+                log.warn("Unable to get JWT Token");
             } catch (final ExpiredJwtException expiredJwtException) {
-                logger.warn("JWT Token has expired");
+                log.warn("JWT Token has expired");
             }
         } else {
-            logger.warn("JWT Token does not begin with Bearer String");
+            log.warn("JWT Token does not begin with Bearer String");
         }
         if (usernameOptional.isPresent()) {
             final UserDetailsDto userDetails = (UserDetailsDto) userDetailsService.loadUserByUsername(usernameOptional.get());

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ReservationChecklistRepository extends CrudRepository<ReservationChecklist, String> {
     List<ReservationChecklist> findAllByTypeEquals(String type);
+    List<ReservationChecklist> findAllByIdIsNotNull();
 }

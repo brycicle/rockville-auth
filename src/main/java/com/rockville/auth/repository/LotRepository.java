@@ -14,7 +14,7 @@ public interface LotRepository extends CrudRepository<Lot, String>, QdslLotRepos
 
     Optional<Lot> findByIdEquals(String id);
     Optional<Lot> findByBlockNameEquals(String blockName);
-    Optional<Lot> findByLotNameEquals(String lotName);
+    Optional<Lot> findByLotNameEqualsAndBlockNameEquals(String lotName, String blockName);
     List<Lot> findAllByStatusEquals(String status);
     List<Lot> findAllByIdIsNotNull();
     Optional<Lot> findAllBySizeGreaterThanEqualAndSizeLessThanEqual(BigDecimal min, BigDecimal max);

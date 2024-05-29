@@ -50,6 +50,8 @@ public class CustomerServiceImpl implements CustomerService {
                         .contactNumber(request.getContactNumber())
                         .address(request.getAddress())
                         .type(request.getType())
+                        .maritalStatus(request.getMaritalStatus())
+                        .gender(request.getGender())
                         .build()
         );
         return CustomerResponse.builder()

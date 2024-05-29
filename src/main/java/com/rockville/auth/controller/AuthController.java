@@ -26,7 +26,11 @@ public class AuthController {
     @PostMapping("/login")
     public BaseResponse<UserDetails> login(@RequestBody LoginRequest request) {
         log.info("AuthController - login {}", request);
-
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
@@ -38,6 +42,7 @@ public class AuthController {
         }
         UserDetailsDto userDetailsDto = (UserDetailsDto) userService.loadUserByUsername(request.getUsername());
         userDetailsDto.setToken(jwtTokenUtil.generateToken(userDetailsDto));
+
         return new BaseResponse<>(userDetailsDto);
     }
 }

@@ -1,6 +1,7 @@
 package com.rockville.auth.service;
 
 import com.rockville.auth.model.domain.ReservationChecklist;
+import com.rockville.auth.model.dto.RequirementResponse;
 import com.rockville.auth.model.dto.ReservationChecklistRequest;
 import com.rockville.auth.model.dto.ReservationChecklistResponse;
 import com.rockville.auth.repository.ReservationChecklistRepository;
@@ -8,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -39,17 +43,27 @@ public class ReservationChecklistServiceImpl implements ReservationChecklistServ
 
     @Override
     public List<ReservationChecklistResponse> getReservationChecklist(String type) {
-        return repository.findAllByTypeEquals(type)
-                .stream()
+        List<ReservationChecklist> checklists = Objects.nonNull(type) ? repository.findAllByTypeEquals(type) : repository.findAllByIdIsNotNull();
+        List<RequirementResponse> requirements = requirementService.getRequirements(
+                checklists.stream().map(ReservationChecklist::getRequirementCode).toList()
+        );
+        return checklists.stream()
                 .map(reservationChecklist -> ReservationChecklistResponse.builder()
                         .type(reservationChecklist.getType())
                         .requirementCode(reservationChecklist.getRequirementCode())
-                        .requirement(requirementService.getRequirement(reservationChecklist.getRequirementCode()))
+//                        .requirement(requirementService.getRequirement(reservationChecklist.getRequirementCode()))
+                        .requirement(requirements.stream()
+                                .filter(requirement -> requirement.getReservationCode()
+                                        .equals(reservationChecklist.getRequirementCode()))
+                                .findFirst()
+                                .orElse(null)
+                        )
                         .createdBy(reservationChecklist.getCreatedBy())
                         .createdAt(reservationChecklist.getCreatedAt())
                         .updatedBy(reservationChecklist.getUpdatedBy())
                         .updatedAt(reservationChecklist.getUpdatedAt())
                         .build())
+                .sorted(Comparator.comparing(ReservationChecklistResponse::getCreatedAt))
                 .toList();
     }
 }

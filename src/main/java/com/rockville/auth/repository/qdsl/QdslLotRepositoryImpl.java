@@ -4,8 +4,12 @@ import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.rockville.auth.model.domain.Lot;
 import com.rockville.auth.model.domain.LotCoordinate;
+import com.rockville.auth.model.domain.LotHouse;
+import com.rockville.auth.model.domain.LotType;
 import com.rockville.auth.model.dto.LotCoordinateResponse;
+import com.rockville.auth.model.dto.LotHouseResponse;
 import com.rockville.auth.model.dto.LotResponse;
+import com.rockville.auth.model.dto.LotTypeResponse;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -15,6 +19,8 @@ import java.util.stream.Collectors;
 
 import static com.rockville.auth.model.domain.QLot.lot;
 import static com.rockville.auth.model.domain.QLotCoordinate.lotCoordinate;
+import static com.rockville.auth.model.domain.QLotHouse.lotHouse;
+import static com.rockville.auth.model.domain.QLotType.lotType1;
 
 public class QdslLotRepositoryImpl extends QuerydslRepositorySupport implements QdslLotRepository {
     JPAQueryFactory queryFactory;
@@ -29,15 +35,23 @@ public class QdslLotRepositoryImpl extends QuerydslRepositorySupport implements 
     public List<LotResponse> getLots() {
         Set<Lot> lots = new HashSet<>();
         List<LotCoordinate> lotCoordinates = new ArrayList<>();
-        queryFactory.select(lot, lotCoordinate)
+        List<LotHouse> lotHouses = new ArrayList<>();
+        List<LotType> lotTypes = queryFactory.select(lotType1)
+                .from(lotType1)
+                .stream()
+                .toList();
+        queryFactory.select(lot, lotCoordinate, lotHouse)
                 .from(lot)
                 .join(lotCoordinate)
                 .on(lotCoordinate.lotId.eq(lot.id))
+                .join(lotHouse)
+                .on(lotHouse.lotId.eq(lot.id))
                 .where(lot.id.eq(lotCoordinate.lotId))
                 .stream()
                 .forEach(tuple -> {
                     lots.add(tuple.get(lot));
                     lotCoordinates.add(tuple.get(lotCoordinate));
+                    lotHouses.add(tuple.get(lotHouse));
                 });
         return lots.stream()
                 .map(lotObj -> LotResponse.builder()
@@ -46,23 +60,39 @@ public class QdslLotRepositoryImpl extends QuerydslRepositorySupport implements 
                         .lotName(lotObj.getLotName())
                         .status(lotObj.getStatus())
                         .size(lotObj.getSize())
+                        .blockLotName("B" + lotObj.getBlockName().replace("Block ", "") + "L" + lotObj.getLotName().replace("Lot ", ""))
+                        .lotAvailability(lotObj.getLotAvailability())
                         .coordinates(
                                 lotCoordinates.stream()
                                         .filter(lotCoordinate1 -> lotCoordinate1.getLotId().equals(lotObj.getId()))
+                                        .sorted(Comparator.comparing(LotCoordinate::getCreatedAt))
                                         .map(lotCoordinate -> LotCoordinateResponse.builder()
-                                                .lotId(lotCoordinate.getLotId())
                                                 .coorX(lotCoordinate.getCoorX())
                                                 .coorY(lotCoordinate.getCoorY())
-                                                .createdAt(lotCoordinate.getCreatedAt())
                                                 .build()
                                         )
-                                        .sorted(Comparator.comparing(LotCoordinateResponse::getCreatedAt))
-                                        .collect(Collectors.toList())
+                                        .collect(Collectors.toCollection(LinkedHashSet::new))
                         )
-                        .createdBy(lotObj.getCreatedBy())
-                        .createdAt(lotObj.getCreatedAt())
-                        .updatedBy(lotObj.getUpdatedBy())
-                        .updatedAt(lotObj.getUpdatedAt())
+                        .lotHouses(
+                                lotHouses.stream()
+                                        .filter(lotHouse -> lotHouse.getLotId().equals(lotObj.getId()))
+                                        .sorted(Comparator.comparing(LotHouse::getCreatedAt))
+                                        .map(lotHouse -> LotHouseResponse.builder()
+                                                .houseName(lotHouse.getHouseName())
+                                                .build()
+                                        )
+                                        .collect(Collectors.toCollection(LinkedHashSet::new))
+                        )
+                        .lotType(
+                                lotTypes.stream()
+                                        .filter(lotType -> lotType.getLotType().equals(lotObj.getType()))
+                                        .map(lotType -> LotTypeResponse.builder()
+                                                .price(lotType.getPrice())
+                                                .lotType(lotType.getLotType())
+                                                .build())
+                                        .findFirst()
+                                        .orElse(null)
+                        )
                         .build()
                 )
                 .toList();

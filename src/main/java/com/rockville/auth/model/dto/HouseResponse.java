@@ -6,7 +6,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
+import java.util.Set;
 
 @Builder
 @Data
@@ -17,7 +17,10 @@ public class HouseResponse {
     private BigDecimal lotArea;
     private BigDecimal floorArea;
     private BigDecimal price;
-    private List<HouseDetailResponse> details;
+    private BigDecimal basePrice;
+    private BigDecimal multiplier;
+    private Set<HouseDetailResponse> details;
+    private Set<HousePictureResponse> pictures;
 
     private Instant createdAt;
     private String createdBy;

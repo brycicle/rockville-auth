@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface HouseRepository extends CrudRepository<House, String>, QdslHouseRepository {
 
     Optional<House> findByIdEquals(String id);
+
+    Optional<House> findByNameEquals(String name);
     List<House> findAllByLotAreaGreaterThanEqualAndLotAreaLessThanEqual(BigDecimal min, BigDecimal max);
 
 }

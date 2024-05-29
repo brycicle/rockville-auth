@@ -13,6 +13,7 @@ public class LotRequest {
     private String blockName;
     private String lotName;
     private String status;
+    private String type;
     private BigDecimal size;
     private List<LotCoordinateRequest> coordinates;
 

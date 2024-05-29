@@ -18,7 +18,7 @@ public class LotCoordinate extends AuditingEntity {
     @Column(name = "id", unique = true)
     private String id;
 
-    @Column(name = "lotId", unique = true)
+    @Column(name = "lotId")
     private String lotId;
 
     @Column(name = "coorX")

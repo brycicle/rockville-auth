@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -32,5 +33,8 @@ public class Lot extends AuditingEntity {
 
     @Column(name = "type")
     private String type;
+
+    @Column(name = "lot_availability")
+    private Instant lotAvailability;
 
 }

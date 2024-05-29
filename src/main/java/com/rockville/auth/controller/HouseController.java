@@ -10,18 +10,18 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/house")
+@RequestMapping("/v1/api/house")
 @RequiredArgsConstructor
 public class HouseController {
 
     private final HouseService houseService;
-    @PostMapping
-    public BaseResponse<HouseResponse> createHouse(@RequestBody HouseRequest request) {
-        log.info("HouseController - createHouse {}", request);
-        return new BaseResponse<>(
-                houseService.createHouse(request)
-        );
-    }
+//    @PostMapping
+//    public BaseResponse<HouseResponse> createHouse(@RequestBody HouseRequest request) {
+//        log.info("HouseController - createHouse {}", request);
+//        return new BaseResponse<>(
+//                houseService.createHouse(request)
+//        );
+//    }
     @GetMapping
     public BaseResponse<List<HouseResponse>> getHouses() {
         log.info("HouseController - getHouses");

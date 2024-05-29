@@ -17,6 +17,8 @@ public class CustomerResponse {
     String suffix;
     String contactNumber;
     String emailAddress;
+    String gender;
+    String maritalStatus;
     String address;
     String type;
 

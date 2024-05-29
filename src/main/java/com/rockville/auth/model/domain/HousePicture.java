@@ -24,4 +24,7 @@ public class HousePicture extends AuditingEntity {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "description")
+    private String description;
+
 }

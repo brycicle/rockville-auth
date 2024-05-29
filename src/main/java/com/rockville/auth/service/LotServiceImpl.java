@@ -9,8 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -36,7 +35,7 @@ public class LotServiceImpl implements LotService {
                         .build()
         );
 
-        List<LotCoordinateResponse> lotCooridnates = new ArrayList<>();
+        Set<LotCoordinateResponse> lotCooridnates = new HashSet<>();
 
         request.getCoordinates().forEach(
                 lotCoordinateRequest -> {
@@ -55,9 +54,55 @@ public class LotServiceImpl implements LotService {
     }
 
     @Override
+    public LotResponse findLotByLotNameAndBlockName(String lotName, String blockName) {
+        Lot lot = repository.findByLotNameEqualsAndBlockNameEquals(lotName, blockName)
+                .orElseThrow();
+
+        return LotResponse.builder()
+                .id(lot.getId())
+                .size(lot.getSize())
+                .status(lot.getStatus())
+                .type(lot.getType())
+                .blockName(lot.getBlockName())
+                .lotName(lot.getLotName())
+                .build();
+    }
+
+    @Override
     public List<LotResponse> createLots(List<LotRequest> requests) {
         List<LotResponse> response = new ArrayList<>();
         requests.forEach(lotRequest -> response.add(createLot(lotRequest)));
         return response;
+    }
+
+    @Override
+    public LotResponse findLotById(String lotId) {
+        Lot lot = repository.findByIdEquals(lotId)
+                .orElseThrow();
+
+        return LotResponse.builder()
+                .id(lot.getId())
+                .size(lot.getSize())
+                .status(lot.getStatus())
+                .blockName(lot.getBlockName())
+                .lotName(lot.getLotName())
+                .build();
+    }
+
+    @Override
+    public LotResponse updateLot(String lotId, LotRequest request) {
+        Lot lot = repository.findByIdEquals(lotId).orElseThrow();
+        lot.setType(request.getType());
+        lot.setStatus(request.getStatus());
+
+        lot = repository.save(lot);
+
+        return LotResponse.builder()
+                .id(lot.getId())
+                .size(lot.getSize())
+                .status(lot.getStatus())
+                .blockName(lot.getBlockName())
+                .lotName(lot.getLotName())
+                .build();
     }
 }

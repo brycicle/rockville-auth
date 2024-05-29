@@ -8,4 +8,6 @@ import java.util.List;
 public interface HouseService {
     HouseResponse createHouse(HouseRequest request);
     List<HouseResponse> getHouses();
+    HouseResponse findHouseByName(String name);
+    HouseResponse findHouseById(String houseId);
 }

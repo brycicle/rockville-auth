@@ -48,12 +48,12 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/v1/api/**")
-                        .permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers("/v1/api/**", "/v1/**")
+                                .permitAll()
 //                        .requestMatchers("/v1/account/**")
 //                        .hasAuthority("Admin")
-                        .anyRequest()
-                        .authenticated()
+                                .anyRequest()
+                                .authenticated()
                 );
         httpSecurity.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint));
         httpSecurity.sessionManagement(sessionAuthenticationStrategy ->
