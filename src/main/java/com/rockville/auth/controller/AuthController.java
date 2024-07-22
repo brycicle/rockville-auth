@@ -18,19 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/api")
 @RequiredArgsConstructor
 public class AuthController {
-
     private final UserDetailsService userService;
-
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
     @PostMapping("/login")
     public BaseResponse<UserDetails> login(@RequestBody LoginRequest request) {
         log.info("AuthController - login {}", request);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())

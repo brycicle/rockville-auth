@@ -35,6 +35,12 @@ public class UserController {
                 userService.getUsers()
         );
     }
+    @GetMapping("/agents")
+    @PostAuthorize("hasAnyAuthority('Admin', 'Accounts_Admin')")
+    public BaseResponse<List<UserResponse>> getSalesAgents() {
+        log.info("UserController - getSalesAgents");
+        return new BaseResponse<>(userService.getSalesAgents());
+    }
     @PutMapping("/{userId}")
     public BaseResponse<UserResponse> updateUser(
             @PathVariable("userId") String userId,

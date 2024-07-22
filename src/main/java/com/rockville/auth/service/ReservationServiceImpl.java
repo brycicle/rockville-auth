@@ -150,4 +150,15 @@ public class ReservationServiceImpl implements ReservationService {
     public Set<ReservationDocumentResponse> getReservationDocuments(UserDetailsDto user, String reservationId) {
         return reservationDocumentService.getReservationDocuments(reservationId);
     }
+
+    @Override
+    public ReservationDocumentResponse addReservationDocument(String reservationId, ReservationDocumentRequest request) {
+        return reservationDocumentService.addReservationDocument(
+                ReservationDocumentRequest.builder()
+                        .reservationId(reservationId)
+                        .requirementCode(request.getRequirementCode())
+                        .file(request.getFile())
+                        .build()
+        );
+    }
 }

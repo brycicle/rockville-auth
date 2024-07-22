@@ -13,7 +13,10 @@ import com.rockville.auth.model.dto.LotTypeResponse;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.util.ObjectUtils;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,7 +64,9 @@ public class QdslLotRepositoryImpl extends QuerydslRepositorySupport implements 
                         .status(lotObj.getStatus())
                         .size(lotObj.getSize())
                         .blockLotName("B" + lotObj.getBlockName().replace("Block ", "") + "L" + lotObj.getLotName().replace("Lot ", ""))
-                        .lotAvailability(lotObj.getLotAvailability())
+                        .lotAvailability(
+                                ObjectUtils.isEmpty(lotObj.getLotAvailability())
+                        ? Instant.MAX : lotObj.getLotAvailability())
                         .coordinates(
                                 lotCoordinates.stream()
                                         .filter(lotCoordinate1 -> lotCoordinate1.getLotId().equals(lotObj.getId()))

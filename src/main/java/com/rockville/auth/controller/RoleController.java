@@ -30,8 +30,8 @@ public class RoleController {
         );
     }
     @PostMapping
-    public BaseResponse<RoleResponse> getRoles(@RequestBody RoleRequest request) {
-        log.info("RoleController - getRoles");
+    public BaseResponse<RoleResponse> createRole(@RequestBody RoleRequest request) {
+        log.info("RoleController - createRole : {}", request);
         return new BaseResponse<>(
                 roleService.createRole(request)
         );

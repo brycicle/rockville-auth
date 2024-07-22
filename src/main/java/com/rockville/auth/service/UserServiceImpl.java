@@ -26,7 +26,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponse> getUsers() {
-        return repository.findAllByIdIsNotNull()
+        return repository.getUsers();
+    }
+
+    @Override
+    public List<UserResponse> getSalesAgents() {
+        return repository.getSalesAgents()
                 .stream()
                 .map(user -> UserResponse.builder()
                         .id(user.getId())

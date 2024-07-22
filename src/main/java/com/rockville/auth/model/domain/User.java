@@ -38,4 +38,7 @@ public class User extends AuditingEntity {
     @Column(name = "lastName")
     private String lastName;
 
+    @Column(name = "title")
+    private String title;
+
 }

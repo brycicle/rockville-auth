@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.Instant;
+import java.util.List;
 
 @Builder
 @Data
@@ -16,6 +17,7 @@ public class UserResponse {
     private String firstName;
     private String middleName;
     private String lastName;
+    private List<String> roles;
 
     private Instant createdAt;
     private String createdBy;

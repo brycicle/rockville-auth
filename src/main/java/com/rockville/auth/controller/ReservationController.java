@@ -25,7 +25,6 @@ public class ReservationController {
     @PostAuthorize("hasAnyAuthority('Admin', 'Sales_Agent')")
     public BaseResponse<ReservationResponse> createReservation(@ModelAttribute ReservationRequest request) {
         log.info("ReservationController - createReservation {}", request);
-
         return new BaseResponse<>(
                 reservationService.createReservation(request)
         );
@@ -37,6 +36,17 @@ public class ReservationController {
         log.info("ReservationController - getReservations {}", user);
         return new BaseResponse<>(
                 reservationService.getReservations(user)
+        );
+    }
+
+    @PostMapping("/documents/{reservationId}")
+    @PostAuthorize("hasAnyAuthority('Admin', 'Sales_Agent')")
+    public BaseResponse<ReservationDocumentResponse> addReservationDocument(
+            @PathVariable("reservationId") String reservationId, @ModelAttribute ReservationDocumentRequest request
+    ) {
+        log.info("ReservationController - createReservation {}", request);
+        return new BaseResponse<>(
+                reservationService.addReservationDocument(reservationId, request)
         );
     }
     @GetMapping("/documents/{reservationId}")
