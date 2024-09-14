@@ -16,6 +16,7 @@ public class UserDetailsDto implements UserDetails, Serializable {
     private String firstName;
     private String middleName;
     private String lastName;
+    private Boolean isResetPassword;
     private User user;
     private List<String> roles;
     private String token;

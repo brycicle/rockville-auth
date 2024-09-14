@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.rockville.auth.model.domain.Reservation;
+import com.rockville.auth.model.domain.User;
 import com.rockville.auth.model.dto.*;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import static com.rockville.auth.model.domain.QCustomer.customer;
 import static com.rockville.auth.model.domain.QHouse.house;
 import static com.rockville.auth.model.domain.QLot.lot;
 import static com.rockville.auth.model.domain.QReservation.reservation;
+import static com.rockville.auth.model.domain.QUser.user;
 import static com.rockville.auth.model.domain.QReservationDocument.reservationDocument;
 
 public class QdslReservationRepositoryImpl extends QuerydslRepositorySupport implements QdslReservationRepository {
@@ -33,10 +35,20 @@ public class QdslReservationRepositoryImpl extends QuerydslRepositorySupport imp
     }
 
     @Override
-    public Set<ReservationResponse> getReservationsByRole(UserDetailsDto user) {
+    public Set<ReservationResponse> getReservationsByRole(UserDetailsDto userDetailsDto) {
         BooleanBuilder builder = new BooleanBuilder();
-        if (user.getUser().getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().contains("Sales_Agent")) {
-            builder.and(reservation.createdBy.eq(user.getUsername()));
+        if (userDetailsDto.getUser().getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().contains("Sales_Agent_Lead")) {
+            builder.and(reservation.createdBy.in(
+                    queryFactory.select(user)
+                            .from(user)
+                            .where(user.teamLeadId.eq(userDetailsDto.getId()))
+                            .stream()
+                            .map(User::getUsername)
+                            .collect(Collectors.toList())
+                    )
+            );
+        } else if (userDetailsDto.getUser().getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().contains("Sales_Agent")) {
+            builder.and(reservation.createdBy.eq(userDetailsDto.getUsername()));
         }
         Set<ReservationResponse> reservations = queryFactory.select(
                         reservation, customer, house, lot

@@ -41,4 +41,10 @@ public class User extends AuditingEntity {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "teamLeadId")
+    private String teamLeadId;
+
+    @Column(name = "isResetPassword")
+    private Boolean isResetPassword;
+
 }

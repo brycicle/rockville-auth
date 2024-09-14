@@ -14,11 +14,13 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static com.rockville.auth.model.domain.QHouse.house;
 import static com.rockville.auth.model.domain.QHouseDetail.houseDetail;
 import static com.rockville.auth.model.domain.QHousePicture.housePicture;
+
 
 public class QdslHouseRepositoryImpl extends QuerydslRepositorySupport implements QdslHouseRepository {
     JPAQueryFactory queryFactory;

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,5 +55,24 @@ public class RoleServiceImpl implements RoleService {
                 .updatedBy(role.getUpdatedBy())
                 .updatedAt(role.getUpdatedAt())
                 .build();
+    }
+
+    @Override
+    public List<RoleResponse> createRoles(List<RoleRequest> requests) {
+        List<Role> roles = new ArrayList<>();
+        requests.forEach(request -> roles.add(
+                Role.builder()
+                        .userId(request.getUserId())
+                        .name(request.getName())
+                        .build()
+        ));
+        repository.saveAll(roles);
+        return roles.stream().map(
+                role -> RoleResponse.builder()
+                        .id(role.getId())
+                        .userId(role.getUserId())
+                        .name(role.getName())
+                        .build()
+        ).collect(Collectors.toList());
     }
 }

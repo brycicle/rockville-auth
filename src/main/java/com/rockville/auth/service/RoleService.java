@@ -8,4 +8,5 @@ import java.util.List;
 public interface RoleService {
     List<RoleResponse> getRoles();
     RoleResponse createRole(RoleRequest request);
+    List<RoleResponse> createRoles(List<RoleRequest> request);
 }

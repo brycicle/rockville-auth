@@ -1,5 +1,6 @@
 package com.rockville.auth.repository.qdsl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.rockville.auth.model.domain.Lot;
@@ -14,6 +15,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -35,7 +37,7 @@ public class QdslLotRepositoryImpl extends QuerydslRepositorySupport implements 
     }
 
     @Override
-    public List<LotResponse> getLots() {
+    public List<LotResponse> getLots(String status) {
         Set<Lot> lots = new HashSet<>();
         List<LotCoordinate> lotCoordinates = new ArrayList<>();
         List<LotHouse> lotHouses = new ArrayList<>();
@@ -43,13 +45,20 @@ public class QdslLotRepositoryImpl extends QuerydslRepositorySupport implements 
                 .from(lotType1)
                 .stream()
                 .toList();
+        BooleanBuilder builder = new BooleanBuilder().and(
+                lot.id.eq(lotCoordinate.lotId)
+        );
+
+        if (!ObjectUtils.isEmpty(status)) {
+            builder.and(lot.status.eq(status));
+        }
         queryFactory.select(lot, lotCoordinate, lotHouse)
                 .from(lot)
                 .join(lotCoordinate)
                 .on(lotCoordinate.lotId.eq(lot.id))
                 .join(lotHouse)
                 .on(lotHouse.lotId.eq(lot.id))
-                .where(lot.id.eq(lotCoordinate.lotId))
+                .where(builder)
                 .stream()
                 .forEach(tuple -> {
                     lots.add(tuple.get(lot));

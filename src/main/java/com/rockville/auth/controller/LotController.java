@@ -1,6 +1,7 @@
 package com.rockville.auth.controller;
 
 import com.rockville.auth.model.dto.BaseResponse;
+import com.rockville.auth.model.dto.LotDashboardResponse;
 import com.rockville.auth.model.dto.LotResponse;
 import com.rockville.auth.service.LotService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,11 +23,17 @@ public class LotController {
     private final LotService lotService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public BaseResponse<List<LotResponse>> getLots() {
+    public BaseResponse<List<LotResponse>> getLots(@RequestParam(name = "status", required = false) String status) {
         log.info("LotController - getLots");
         return new BaseResponse<>(
-                lotService.getLots()
+                lotService.getLots(status)
         );
+    }
+
+    @GetMapping("/dashboard")
+    public BaseResponse<LotDashboardResponse> getDashboardDetails() {
+        log.info("LotController - getDashboardDetails");
+        return new BaseResponse<>(lotService.getDashboardDetails());
     }
 
 //    @PostMapping

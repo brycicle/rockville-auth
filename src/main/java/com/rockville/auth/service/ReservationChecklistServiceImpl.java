@@ -48,21 +48,28 @@ public class ReservationChecklistServiceImpl implements ReservationChecklistServ
                 checklists.stream().map(ReservationChecklist::getRequirementCode).toList()
         );
         return checklists.stream()
-                .map(reservationChecklist -> ReservationChecklistResponse.builder()
-                        .type(reservationChecklist.getType())
-                        .requirementCode(reservationChecklist.getRequirementCode())
+                .map(reservationChecklist -> {
+                            RequirementResponse requirementResponse = requirements.stream()
+                                    .filter(requirement -> requirement.getReservationCode()
+                                            .equals(reservationChecklist.getRequirementCode()))
+                                    .findFirst()
+                                    .orElse(null);
+                    return ReservationChecklistResponse.builder()
+                            .type(reservationChecklist.getType())
+                            .requirementCode(reservationChecklist.getRequirementCode())
+                            .requirementName(
+                                    Objects.nonNull(requirementResponse) ?
+                                            requirementResponse.getName() : null
+                            )
 //                        .requirement(requirementService.getRequirement(reservationChecklist.getRequirementCode()))
-                        .requirement(requirements.stream()
-                                .filter(requirement -> requirement.getReservationCode()
-                                        .equals(reservationChecklist.getRequirementCode()))
-                                .findFirst()
-                                .orElse(null)
-                        )
-                        .createdBy(reservationChecklist.getCreatedBy())
-                        .createdAt(reservationChecklist.getCreatedAt())
-                        .updatedBy(reservationChecklist.getUpdatedBy())
-                        .updatedAt(reservationChecklist.getUpdatedAt())
-                        .build())
+                            .requirement(requirementResponse)
+                            .createdBy(reservationChecklist.getCreatedBy())
+                            .createdAt(reservationChecklist.getCreatedAt())
+                            .updatedBy(reservationChecklist.getUpdatedBy())
+                            .updatedAt(reservationChecklist.getUpdatedAt())
+                            .build();
+                }
+                )
                 .sorted(Comparator.comparing(ReservationChecklistResponse::getCreatedAt))
                 .toList();
     }

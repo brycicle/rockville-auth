@@ -31,7 +31,7 @@ public class ReservationController {
     }
 
     @GetMapping
-    @PostAuthorize("hasAnyAuthority('Admin', 'Sales_Agent')")
+    @PostAuthorize("hasAnyAuthority('Admin', 'Sales_Agent', 'Sales_Agent_Lead')")
     public BaseResponse<Set<ReservationResponse>> getReservations(@AuthenticationPrincipal UserDetailsDto user) {
         log.info("ReservationController - getReservations {}", user);
         return new BaseResponse<>(
@@ -51,7 +51,7 @@ public class ReservationController {
     }
     @GetMapping("/documents/{reservationId}")
     @PostAuthorize("hasAnyAuthority('Admin', 'Sales_Agent')")
-    public BaseResponse<Set<ReservationDocumentResponse>> getReservationDocuments(
+    public BaseResponse<Set<ReservationDocumentResponse>> getResesssdsrvationDocuments(
             @AuthenticationPrincipal UserDetailsDto user, @PathVariable("reservationId") String reservationId
     ) {
         log.info("ReservationController - getReservationDocuments {} - {}", reservationId, user);

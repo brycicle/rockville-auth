@@ -5,7 +5,7 @@ spring:
 #    url: jdbc:mysql://localhost/rockville-auth
 #    username: root
 #    password: Bryce@27923
-    url: jdbc:mysql://rockville-db.cbmeq2oksu75.ap-southeast-1.rds.amazonaws.com/rockville-auth
+    url: jdbc:mysql://ec2-rv-cms.c5u8qw4iyyzb.ap-southeast-1.rds.amazonaws.com/rockville-auth
     username: root
     password: Bryce27923
     hikari:

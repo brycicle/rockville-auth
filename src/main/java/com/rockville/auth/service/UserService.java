@@ -11,5 +11,6 @@ public interface UserService {
     List<UserResponse> getUsers();
     List<UserResponse> getSalesAgents();
     UserResponse createUser(UserRequest request);
+    List<UserResponse> createUsers(List<UserRequest> request);
     UserResponse updateUser(String userId, UserRequest request);
 }

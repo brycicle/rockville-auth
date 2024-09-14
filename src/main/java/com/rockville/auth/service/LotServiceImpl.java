@@ -2,6 +2,7 @@ package com.rockville.auth.service;
 
 import com.rockville.auth.model.domain.Lot;
 import com.rockville.auth.model.dto.LotCoordinateResponse;
+import com.rockville.auth.model.dto.LotDashboardResponse;
 import com.rockville.auth.model.dto.LotRequest;
 import com.rockville.auth.model.dto.LotResponse;
 import com.rockville.auth.repository.LotRepository;
@@ -18,10 +19,9 @@ public class LotServiceImpl implements LotService {
 
     private final LotRepository repository;
     private final LotCoordinateService lotCoordinateService;
-
     @Override
-    public List<LotResponse> getLots() {
-        return repository.getLots();
+    public List<LotResponse> getLots(String status) {
+        return repository.getLots(status);
     }
 
     @Override
@@ -103,6 +103,13 @@ public class LotServiceImpl implements LotService {
                 .status(lot.getStatus())
                 .blockName(lot.getBlockName())
                 .lotName(lot.getLotName())
+                .build();
+    }
+
+    @Override
+    public LotDashboardResponse getDashboardDetails() {
+        return LotDashboardResponse.builder()
+                .totalAvailable(repository.countByStatusEquals("Available"))
                 .build();
     }
 }

@@ -34,6 +34,7 @@ public final class UserDetailsServiceImpl implements UserDetailsService {
                     .firstName(user.getFirstName())
                     .middleName(user.getMiddleName())
                     .lastName(user.getLastName())
+                    .isResetPassword(user.getIsResetPassword())
                     .user(new org.springframework.security.core.userdetails.User(
                                     user.getUsername(),
                                     user.getPassword(),

@@ -10,6 +10,7 @@ import java.time.Instant;
 public class ReservationChecklistResponse {
     private String type;
     private String requirementCode;
+    private String requirementName;
     private RequirementResponse requirement;
 
     private Instant createdAt;

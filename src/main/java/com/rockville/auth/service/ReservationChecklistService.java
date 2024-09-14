@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface ReservationChecklistService {
     ReservationChecklistResponse createReservationChecklist(ReservationChecklistRequest request);
-
     List<ReservationChecklistResponse> getReservationChecklist(String type);
 }
