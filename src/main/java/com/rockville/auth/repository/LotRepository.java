@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface  LotRepository extends CrudRepository<Lot, String>, QdslLotRepository {
+public interface LotRepository extends CrudRepository<Lot, String>, QdslLotRepository {
 
     Optional<Lot> findByIdEquals(String id);
     Optional<Lot> findByBlockNameEquals(String blockName);
