@@ -6,8 +6,9 @@ import com.rockville.auth.repository.qdsl.QdslReservationRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservationRepository extends CrudRepository<Reservation, String>, QdslReservationRepository {
     List<Reservation> findAllByIdIsNotNull();
-    Reservation findByIdEquals(String Reservation);
+    Optional<Reservation> findByIdEquals(String reservationId);
 }
